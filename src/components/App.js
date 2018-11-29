@@ -56,32 +56,28 @@ class App extends Component {
             data="R"
             borderColor="red"
             isHome={this.state.home}
-            xMove={"left"}
-            yMove={"top"}
+            animationStart={"x"}
             containerWidth={this.state.containerWidth}
           />
           <Letter
             data="Y"
             borderColor="red"
             isHome={this.state.home}
-            xMove={"right"}
-            yMove={"top"}
+            animationStart={"y"}
             containerWidth={this.state.containerWidth}
           />
           <Letter
             data="A"
             borderColor="red"
             isHome={this.state.home}
-            xMove={"right"}
-            yMove={"bottom"}
+            animationStart={"y"}
             containerWidth={this.state.containerWidth}
           />
           <Letter
             data="N"
             borderColor="red"
             isHome={this.state.home}
-            xMove={"left"}
-            yMove={"bottom"}
+            animationStart={"x"}
             containerWidth={this.state.containerWidth}
           />
         </NameWrapper>
