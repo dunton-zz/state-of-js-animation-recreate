@@ -19,7 +19,8 @@ class Letter extends Component {
     this.state = {
       x: 0,
       y: 0,
-      animationTime: 1
+      animationTime: 3,
+      isHome: false
     };
     // reference to the DOM node
     this.letterElement = null;
@@ -44,17 +45,21 @@ class Letter extends Component {
       this.props.containerWidth - this.letterElement.getBoundingClientRect().x;
     const smallestX = -this.letterElement.offsetLeft - 25;
 
-    this.animation = new TimelineMax({ repeat: 1, yoyo: true }).to(
+    this.animation = new TimelineMax({ repeat: -1, yoyo: true }).to(
       this.letterElement,
       this.state.animationTime,
       {
-        x: this.state.x,
-        y: this.state.y
+        x: smallestX,
+        y: largestY
       }
     );
   };
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    if (!this.state.isHome) {
+      this.moveAnimation();
+    }
+  }
   render() {
     console.log(this.state);
     const { data, borderColor, isHome, margin } = this.props;
