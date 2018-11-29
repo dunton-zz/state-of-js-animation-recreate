@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
-
-const bounceAnimation = keyframes`
-  from {
-    margin-left: ${props => props.margin}px;
-    margin-top: ${props => props.margin}px;
-  }
-  100% {
-    margin-left: ${props => props.margin}px;
-    margin-top: 0;
-  }`;
+import styled from "styled-components";
+import { TimelineMax } from "gsap";
 
 const StyledLetter = styled.div`
   padding: 25px;
@@ -20,18 +11,60 @@ const StyledLetter = styled.div`
   transition: transform 3300ms ease-in-out;
 `;
 
-const Trigger = styled.div`
-  margin-top: ${props => props.margin}px;
-  margin-left: ${props => props.margin}px;
-  position: absolute;
-  animation: ${bounceAnimation} 5s infinite alternate;
-`;
+const Trigger = styled.div``;
 
 class Letter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      x: 0,
+      y: 0,
+      animationTime: 1
+    };
+    // reference to the DOM node
+    this.letterElement = null;
+    // reference to the animation
+    this.animation = null;
+  }
+  moveAnimationProps = (xValue, yValue) => {
+    this.setState({
+      x: 2,
+      y: 0
+    });
+  };
+  componentDidMount() {
+    this.moveAnimationProps();
+    this.moveAnimation(this.props.xValue, 200);
+  }
+
+  moveAnimation = () => {
+    const largestY = this.letterElement.offsetHeight - 95;
+    const smallestY = 0;
+    const largestX =
+      this.props.containerWidth - this.letterElement.getBoundingClientRect().x;
+    const smallestX = -this.letterElement.offsetLeft - 25;
+
+    this.animation = new TimelineMax({ repeat: 1, yoyo: true }).to(
+      this.letterElement,
+      this.state.animationTime,
+      {
+        x: this.state.x,
+        y: this.state.y
+      }
+    );
+  };
+
+  componentDidUpdate() {}
   render() {
+    console.log(this.state);
     const { data, borderColor, isHome, margin } = this.props;
+
     return (
-      <Trigger isHome={isHome} margin={margin}>
+      <Trigger
+        isHome={isHome}
+        margin={margin}
+        ref={div => (this.letterElement = div)}
+      >
         <StyledLetter isHome={isHome} borderColor={borderColor}>
           {data}
         </StyledLetter>

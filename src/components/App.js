@@ -6,25 +6,29 @@ import styled from "styled-components";
 const NameWrapper = styled.div`
   display: flex;
   justify-content: center;
+  height: 100%;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 `;
 
 const Wrapper = styled.section`
   height: 100vh;
+  overflow: hidden;
 `;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      home: false
+      home: false,
+      containerWidth: 0
     };
+
+    this.NameWrapper = null;
   }
 
   checkForHover = () => {
@@ -37,74 +41,51 @@ class App extends Component {
       home: false
     });
   };
+  componentDidMount() {
+    const width = this.NameWrapper.getBoundingClientRect().width;
+    this.setState({
+      containerWidth: width
+    });
+  }
   render() {
     console.log(this.state);
     return (
       <Wrapper>
-        <div>
+        <NameWrapper ref={div => (this.NameWrapper = div)}>
           <Letter
             data="R"
             borderColor="red"
             isHome={this.state.home}
-            margin={20}
+            xMove={"left"}
+            yMove={"top"}
+            containerWidth={this.state.containerWidth}
           />
           <Letter
             data="Y"
             borderColor="red"
             isHome={this.state.home}
-            margin={120}
+            xMove={"right"}
+            yMove={"top"}
+            containerWidth={this.state.containerWidth}
           />
           <Letter
             data="A"
             borderColor="red"
             isHome={this.state.home}
-            margin={220}
+            xMove={"right"}
+            yMove={"bottom"}
+            containerWidth={this.state.containerWidth}
           />
           <Letter
             data="N"
             borderColor="red"
             isHome={this.state.home}
-            margin={320}
+            xMove={"left"}
+            yMove={"bottom"}
+            containerWidth={this.state.containerWidth}
           />
-        </div>
-        <div>
-          <Letter
-            data="D"
-            borderColor="red"
-            isHome={this.state.home}
-            margin={520}
-          />
-          <Letter
-            data="U"
-            borderColor="red"
-            isHome={this.state.home}
-            margin={620}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            margin={720}
-          />
-          <Letter
-            data="T"
-            borderColor="red"
-            isHome={this.state.home}
-            margin={820}
-          />
-          <Letter
-            data="O"
-            borderColor="red"
-            isHome={this.state.home}
-            margin={920}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            margin={1020}
-          />
-        </div>
+        </NameWrapper>
+
         <ButtonWrapper>
           <EnterButton
             buttonText="Who am I?"
