@@ -19,24 +19,25 @@ class Letter extends Component {
     this.state = {
       x: 0,
       y: 0,
+      largestX: 0,
+      largestY: 0,
+      smallestX: 0,
+      smallestY: -25,
       animationTime: 3,
       isHome: false,
       containerWidth: 0,
-      animationType: null
+      animationType: null,
+      stop: false
     };
     // reference to the DOM node
     this.letterElement = null;
     // reference to the animation
     this.animation = null;
+
+    this.updateLetterPosition = this.updateLetterPosition.bind(this);
   }
   moveAnimationProps = animationStart => {
-    const windowWidth = window.innerWidth;
-    const largestY = this.letterElement.offsetHeight - 95;
-    const smallestY = -25;
-    const largestX =
-      windowWidth - 88 - this.letterElement.getBoundingClientRect().x;
-    const smallestX = -this.letterElement.offsetLeft - 25;
-
+    const { largestY, largestX, smallestX, smallestY } = this.state;
     let newX, newY;
     if (animationStart === "x") {
       let yPos = Math.floor(Math.random() * largestY);
@@ -58,13 +59,38 @@ class Letter extends Component {
       animationTime: animationLength
     });
   };
+  updateLetterPosition() {
+    // we take previous max/mins and add the new movements
+    this.setState(
+      state => {
+        return {
+          largestX: state.largestX - state.x,
+          largestY: state.largestY - state.y,
+          smallestX: state.smallestX + state.x,
+          smallestY: state.smallestY + state.y
+        };
+      },
+      () => {
+        this.flipAnimation();
+      }
+    );
+  }
   componentDidMount() {
     const { animationStart } = this.props;
-    this.setState({
-      animationType: animationStart
-    });
-    this.moveAnimationProps(animationStart);
-    this.moveAnimation();
+    const windowWidth = window.innerWidth;
+    this.setState(
+      {
+        animationType: animationStart,
+        largestY: this.letterElement.offsetHeight - 95,
+        largestX:
+          windowWidth - 88 - this.letterElement.getBoundingClientRect().x,
+        smallestX: -this.letterElement.offsetLeft - 25
+      },
+      () => {
+        this.moveAnimationProps(animationStart);
+        this.moveAnimation();
+      }
+    );
   }
 
   flipAnimation = () => {
@@ -93,15 +119,15 @@ class Letter extends Component {
       {
         x: this.state.x,
         y: this.state.y,
-        onComplete: this.flipAnimation
+        onComplete: this.updateLetterPosition
       }
     );
   };
 
   componentDidUpdate() {
-    if (!this.state.isHome) {
-      this.moveAnimation();
-    }
+    // if (!this.state.isHome) {
+    //   this.moveAnimation();
+    // }
   }
   render() {
     const { data, borderColor, isHome, margin } = this.props;
