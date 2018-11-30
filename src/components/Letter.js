@@ -62,12 +62,12 @@ class Letter extends Component {
   updateLetterPosition() {
     // we take previous max/mins and add the new movements
     this.setState(
-      state => {
+      prevState => {
         return {
-          largestX: state.largestX - state.x,
-          largestY: state.largestY - state.y,
-          smallestX: state.smallestX + state.x,
-          smallestY: state.smallestY + state.y
+          largestX: prevState.largestX - prevState.x,
+          largestY: prevState.largestY - prevState.y,
+          smallestX: prevState.smallestX + prevState.x,
+          smallestY: prevState.smallestY + prevState.y
         };
       },
       () => {

@@ -24,8 +24,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      home: false,
-      containerWidth: 0
+      home: false
     };
 
     this.NameWrapper = null;
@@ -57,28 +56,24 @@ class App extends Component {
             borderColor="red"
             isHome={this.state.home}
             animationStart={"x"}
-            containerWidth={this.state.containerWidth}
           />
           <Letter
             data="Y"
             borderColor="red"
             isHome={this.state.home}
             animationStart={"y"}
-            containerWidth={this.state.containerWidth}
           />
           <Letter
             data="A"
             borderColor="red"
             isHome={this.state.home}
             animationStart={"y"}
-            containerWidth={this.state.containerWidth}
           />
           <Letter
             data="N"
             borderColor="red"
             isHome={this.state.home}
             animationStart={"x"}
-            containerWidth={this.state.containerWidth}
           />
         </NameWrapper>
 
