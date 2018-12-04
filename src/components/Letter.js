@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TimelineMax, TweenLite } from "gsap";
+import { TweenLite, Linear } from "gsap";
 import leftToRightAnimation from "./leftToRightAnimation";
 import topToBottomAnimation from "./topToBottomAnimation";
 
@@ -72,10 +72,12 @@ class Letter extends Component {
         currentSide
       );
       const { x, y, xDirection } = newCoordinates;
+      const animationTime = Math.floor(Math.random() * 3) + 1;
       this.setState(
         {
           x,
           y,
+          animationTime,
           currentSide: xDirection,
           animationType: "x"
         },
@@ -92,11 +94,13 @@ class Letter extends Component {
         currentTopOrBottom
       );
       const { x, y, yDirection } = newCoordinates;
+      const animationTime = Math.floor(Math.random() * 4) + 1;
+
       this.setState(
         {
           x,
           y,
-          //currentSide: xDirection
+          animationTime,
           currentTopOrBottom: yDirection,
           animationType: "y"
         },
@@ -123,6 +127,7 @@ class Letter extends Component {
       {
         x: this.state.x,
         y: this.state.y,
+        ease: Linear.EaseNone,
         onComplete: this.flipAnimation
       }
     );

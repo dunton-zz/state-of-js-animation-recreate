@@ -7,7 +7,6 @@ const leftToRightAnimation = (
 ) => {
   let moveLeftOrRight = Math.floor(Math.random() * 2) === 0;
   let xDirection;
-  console.log(currentSide);
   if (currentSide === "left") {
     xDirection = "right";
   } else if (currentSide === "right") {

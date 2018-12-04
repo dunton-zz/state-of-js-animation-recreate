@@ -7,7 +7,6 @@ const topToBottomAnimation = (
 ) => {
   let moveTopOrBottom = Math.floor(Math.random() * 2) === 0;
   let yDirection;
-  console.log(currentTopOrBottom);
   if (currentTopOrBottom === "bottom") {
     yDirection = "top";
   } else if (currentTopOrBottom === "top") {
