@@ -60,6 +60,30 @@ class App extends Component {
             currentSide={"left"}
             currentTopOrBottom={"top"}
           />
+          <Letter
+            data="Y"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"x"}
+            currentSide={"right"}
+            currentTopOrBottom={"top"}
+          />
+          <Letter
+            data="A"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"x"}
+            currentSide={"left"}
+            currentTopOrBottom={"top"}
+          />
+          <Letter
+            data="N"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"y"}
+            currentSide={"right"}
+            currentTopOrBottom={"bottom"}
+          />
         </NameWrapper>
         <ButtonWrapper>
           <EnterButton

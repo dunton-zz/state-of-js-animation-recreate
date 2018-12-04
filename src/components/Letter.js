@@ -28,7 +28,8 @@ class Letter extends Component {
       minLeft: null,
       currentSide: null,
       currentTopOrBottom: null,
-      animationType: ""
+      animationType: "",
+      endAnimation: false
     };
     // reference to the DOM node
     this.letterElement = null;
@@ -55,6 +56,11 @@ class Letter extends Component {
         this.moveElement(animationType);
       }
     );
+  }
+
+  componentWillReceiveProps() {
+    this.returnToHome();
+    console.log("called");
   }
 
   moveElement = animationType => {
@@ -116,7 +122,10 @@ class Letter extends Component {
 
   flipAnimation = () => {
     // alternate animation types
-    const { animationType } = this.state;
+    const { animationType, endAnimation } = this.state;
+    if (endAnimation) {
+      return;
+    }
     if (animationType === "x") {
       this.moveElement("y");
     } else if (animationType === "y") {
@@ -134,6 +143,23 @@ class Letter extends Component {
         onComplete: this.flipAnimation
       }
     );
+  };
+
+  returnToHome = () => {
+    const { isHome } = this.props;
+    if (isHome) {
+      this.setState(
+        {
+          x: 0,
+          y: 0,
+          animationTime: 0.5,
+          endAnimation: true
+        },
+        () => {
+          this.moveAnimation();
+        }
+      );
+    }
   };
 
   render() {

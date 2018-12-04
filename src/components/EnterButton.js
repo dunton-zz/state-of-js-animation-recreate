@@ -6,6 +6,7 @@ const Button = styled.div`
   background-color: green;
   padding: 20px 50px;
   z-index: 100;
+  cursor: pointer;
 `;
 
 const WrapButton = styled.div`
@@ -19,7 +20,11 @@ const EnterButton = props => {
   const { buttonText, checkForHover, removeHover } = props;
   return (
     <WrapButton>
-      <Button onMouseEnter={checkForHover} onMouseLeave={removeHover}>
+      <Button
+        onMouseOver={checkForHover}
+        onMouseLeave={removeHover}
+        onClick={checkForHover}
+      >
         {buttonText}
       </Button>
     </WrapButton>
