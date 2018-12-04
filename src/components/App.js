@@ -55,25 +55,7 @@ class App extends Component {
             data="R"
             borderColor="red"
             isHome={this.state.home}
-            animationStart={"x"}
-          />
-          <Letter
-            data="Y"
-            borderColor="red"
-            isHome={this.state.home}
-            animationStart={"y"}
-          />
-          <Letter
-            data="A"
-            borderColor="red"
-            isHome={this.state.home}
-            animationStart={"y"}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationStart={"x"}
+            animationType={"x"}
           />
         </NameWrapper>
 

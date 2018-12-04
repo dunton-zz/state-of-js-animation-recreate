@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { TimelineMax, TweenLite } from "gsap";
+import leftToRightAnimation from "./leftToRightAnimation";
+import topToBottomAnimation from "./topToBottomAnimation";
 
 const StyledLetter = styled.div`
   padding: 25px;
@@ -19,116 +21,113 @@ class Letter extends Component {
     this.state = {
       x: 0,
       y: 0,
-      largestX: 0,
-      largestY: 0,
-      smallestX: 0,
-      smallestY: -25,
-      animationTime: 3,
-      isHome: false,
-      containerWidth: 0,
-      animationType: null,
-      stop: false
+      animationTime: 2,
+      minTop: null,
+      maxTop: null,
+      maxRight: null,
+      minLeft: null,
+      currentSide: null,
+      currentTopOrBottom: null,
+      animationType: ""
     };
     // reference to the DOM node
     this.letterElement = null;
     // reference to the animation
     this.animation = null;
+  }
 
-    this.updateLetterPosition = this.updateLetterPosition.bind(this);
-  }
-  moveAnimationProps = animationStart => {
-    const { largestY, largestX, smallestX, smallestY } = this.state;
-    let newX, newY;
-    if (animationStart === "x") {
-      let yPos = Math.floor(Math.random() * largestY);
-      // randomize
-      let left = Math.random() >= 0.5; // if true left if false right
-      newX = left ? smallestX : largestX;
-      newY = yPos;
-    } else if (animationStart === "y") {
-      let xPos = Math.floor(Math.random() * largestX);
-      // randomize
-      let bottom = Math.random() >= 0.5; // if true bottom if false top
-      newY = bottom ? largestY : smallestY;
-      newX = xPos;
-    }
-    let animationLength = Math.random() * 4.5 + 1;
-    this.setState({
-      x: newX,
-      y: newY,
-      animationTime: animationLength
-    });
-  };
-  updateLetterPosition() {
-    // we take previous max/mins and add the new movements
-    this.setState(
-      prevState => {
-        return {
-          largestX: prevState.largestX - prevState.x,
-          largestY: prevState.largestY - prevState.y,
-          smallestX: prevState.smallestX + prevState.x,
-          smallestY: prevState.smallestY + prevState.y
-        };
-      },
-      () => {
-        this.flipAnimation();
-      }
-    );
-  }
   componentDidMount() {
-    const { animationStart } = this.props;
+    const { animationType } = this.props;
     const windowWidth = window.innerWidth;
     this.setState(
       {
-        animationType: animationStart,
-        largestY: this.letterElement.offsetHeight - 95,
-        largestX:
-          windowWidth - 88 - this.letterElement.getBoundingClientRect().x,
-        smallestX: -this.letterElement.offsetLeft - 25
+        minTop: -this.letterElement.offsetTop - 25,
+        maxTop: this.letterElement.offsetHeight - 90,
+        maxRight:
+          windowWidth - this.letterElement.getBoundingClientRect().x - 90,
+        minLeft: -this.letterElement.offsetLeft - 25,
+        animationType
       },
       () => {
-        this.moveAnimationProps(animationStart);
-        this.moveAnimation();
+        this.moveElement(animationType);
       }
     );
   }
 
+  moveElement = animationType => {
+    const {
+      minTop,
+      maxTop,
+      minLeft,
+      maxRight,
+      currentSide,
+      currentTopOrBottom
+    } = this.state;
+    if (animationType === "x") {
+      const newCoordinates = leftToRightAnimation(
+        minTop,
+        maxTop,
+        minLeft,
+        maxRight,
+        currentSide
+      );
+      const { x, y, xDirection } = newCoordinates;
+      this.setState(
+        {
+          x,
+          y,
+          currentSide: xDirection,
+          animationType: "x"
+        },
+        () => {
+          this.moveAnimation();
+        }
+      );
+    } else if (animationType === "y") {
+      const newCoordinates = topToBottomAnimation(
+        minTop,
+        maxTop,
+        minLeft,
+        maxRight,
+        currentTopOrBottom
+      );
+      const { x, y, yDirection } = newCoordinates;
+      this.setState(
+        {
+          x,
+          y,
+          //currentSide: xDirection
+          currentTopOrBottom: yDirection,
+          animationType: "y"
+        },
+        () => {
+          this.moveAnimation();
+        }
+      );
+    }
+  };
+
   flipAnimation = () => {
     // alternate animation types
-    const animationType = this.state.animationType;
+    const { animationType } = this.state;
     if (animationType === "x") {
-      this.moveAnimationProps("y");
-      this.moveAnimation();
+      this.moveElement("y");
     } else if (animationType === "y") {
-      this.moveAnimationProps("x");
-      this.moveAnimation();
+      this.moveElement("x");
     }
   };
   moveAnimation = () => {
-    // this.animation = new TimelineMax({ repeat: -1, yoyo: true }).to(
-    //   this.letterElement,
-    //   this.state.animationTime,
-    //   {
-    //     x: this.state.x,
-    //     y: this.state.y
-    //   }
-    // );
     this.animation = TweenLite.to(
       this.letterElement,
       this.state.animationTime,
       {
         x: this.state.x,
         y: this.state.y,
-        onComplete: this.updateLetterPosition
+        onComplete: this.flipAnimation
       }
     );
   };
 
-  componentDidUpdate() {
-    // if (!this.state.isHome) {
-    //   this.moveAnimation();
-    // }
-  }
   render() {
     const { data, borderColor, isHome, margin } = this.props;
     return (
