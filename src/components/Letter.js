@@ -37,7 +37,8 @@ class Letter extends Component {
   }
 
   componentDidMount() {
-    const { animationType } = this.props;
+    const { animationType, currentSide, currentTopOrBottom } = this.props;
+
     const windowWidth = window.innerWidth;
     this.setState(
       {
@@ -46,7 +47,9 @@ class Letter extends Component {
         maxRight:
           windowWidth - this.letterElement.getBoundingClientRect().x - 90,
         minLeft: -this.letterElement.offsetLeft - 25,
-        animationType
+        animationType,
+        currentSide: currentSide,
+        currentTopOrBottom
       },
       () => {
         this.moveElement(animationType);
@@ -79,7 +82,7 @@ class Letter extends Component {
           y,
           animationTime,
           currentSide: xDirection,
-          animationType: "x"
+          animationType
         },
         () => {
           this.moveAnimation();

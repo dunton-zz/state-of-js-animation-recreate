@@ -10,9 +10,10 @@ const NameWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
 `;
 
 const Wrapper = styled.section`
@@ -55,62 +56,9 @@ class App extends Component {
             data="R"
             borderColor="red"
             isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="Y"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="A"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-
-          <Letter
-            data="D"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="U"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="T"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="O"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
+            animationType={"y"}
+            currentSide={"left"}
+            currentTopOrBottom={"top"}
           />
         </NameWrapper>
         <ButtonWrapper>

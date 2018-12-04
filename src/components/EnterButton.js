@@ -1,18 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+
 const Button = styled.div`
-  color: white
+  color: white;
   background-color: green;
   padding: 20px 50px;
-  position: relative;
   z-index: 100;
 `;
+
+const WrapButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
 const EnterButton = props => {
   const { buttonText, checkForHover, removeHover } = props;
   return (
-    <Button onMouseEnter={checkForHover} onMouseLeave={removeHover}>
-      {buttonText}
-    </Button>
+    <WrapButton>
+      <Button onMouseEnter={checkForHover} onMouseLeave={removeHover}>
+        {buttonText}
+      </Button>
+    </WrapButton>
   );
 };
 
