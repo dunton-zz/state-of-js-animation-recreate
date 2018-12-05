@@ -5,12 +5,12 @@ import leftToRightAnimation from "./leftToRightAnimation";
 import topToBottomAnimation from "./topToBottomAnimation";
 
 const StyledLetter = styled.div`
-  padding: 25px;
+  padding: 32px;
   background-color: black;
   color: white;
-  margin: 25px;
+  margin: 20px;
   border: 1px solid ${props => props.borderColor};
-  transition: transform 3300ms ease-in-out;
+  font-size: 22px;
 `;
 
 const Trigger = styled.div``;
@@ -43,10 +43,10 @@ class Letter extends Component {
     const windowWidth = window.innerWidth;
     this.setState(
       {
-        minTop: -this.letterElement.offsetTop - 25,
-        maxTop: this.letterElement.offsetHeight - 90,
+        minTop: -this.letterElement.offsetTop - 20,
+        maxTop: this.letterElement.offsetHeight - 102,
         maxRight:
-          windowWidth - this.letterElement.getBoundingClientRect().x - 90,
+          windowWidth - this.letterElement.getBoundingClientRect().x - 95,
         minLeft: -this.letterElement.offsetLeft - 25,
         animationType,
         currentSide: currentSide,
@@ -137,7 +137,7 @@ class Letter extends Component {
       {
         x: this.state.x,
         y: this.state.y,
-        ease: Linear.EaseNone,
+        ease: Linear.EaseIn,
         onComplete: this.flipAnimation
       }
     );
