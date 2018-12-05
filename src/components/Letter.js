@@ -71,7 +71,8 @@ class Letter extends Component {
       currentLeftOrRight,
       currentTopOrBottom
     } = this.state;
-    const animationTime = Math.floor(Math.random() * 3) + 1;
+    const animationTime = Math.floor(Math.random() * 4) + 1;
+
     if (animationType === "x") {
       const newCoordinates = getNewCoordinates(
         minTop,
@@ -126,7 +127,7 @@ class Letter extends Component {
       {
         x: this.state.x,
         y: this.state.y,
-        ease: Linear.EaseIn,
+        ease: Linear.easeNone,
         onComplete: this.flipAnimation
       }
     );
