@@ -27,11 +27,8 @@ class App extends Component {
     super(props);
     this.state = {
       home: false,
-      margin: 20,
-      update: false
+      margin: 20
     };
-
-    this.NameWrapper = null;
   }
 
   checkForHover = () => {
@@ -48,7 +45,7 @@ class App extends Component {
   render() {
     return (
       <Wrapper>
-        <NameWrapper ref={div => (this.NameWrapper = div)}>
+        <NameWrapper>
           <Letter
             data="R"
             borderColor="red"
