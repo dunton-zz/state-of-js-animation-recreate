@@ -58,11 +58,6 @@ class Letter extends Component {
     );
   }
 
-  componentWillReceiveProps() {
-    this.returnToHome();
-    console.log("called");
-  }
-
   moveElement = animationType => {
     const {
       minTop,
@@ -124,6 +119,9 @@ class Letter extends Component {
     // alternate animation types
     const { animationType, endAnimation } = this.state;
     if (endAnimation) {
+      this.setState({
+        endAnimation: true
+      });
       return;
     }
     if (animationType === "x") {
@@ -145,9 +143,21 @@ class Letter extends Component {
     );
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.isHome) {
+      this.returnToHome();
+    }
+    // check to see if isHome is false and endAnimation is true, means we left button
+    if (!this.props.isHome && this.state.endAnimation) {
+      this.setState({
+        endAnimation: false
+      });
+      this.moveAnimation(this.state.animationType);
+    }
+  }
+
   returnToHome = () => {
-    const { isHome } = this.props;
-    if (isHome) {
+    if (this.state.x !== 0) {
       this.setState(
         {
           x: 0,
@@ -164,6 +174,7 @@ class Letter extends Component {
 
   render() {
     const { data, borderColor, isHome, margin } = this.props;
+
     return (
       <Trigger
         isHome={isHome}

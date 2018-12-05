@@ -21,7 +21,7 @@ const EnterButton = props => {
   return (
     <WrapButton>
       <Button
-        onMouseOver={checkForHover}
+        onMouseEnter={checkForHover}
         onMouseLeave={removeHover}
         onClick={checkForHover}
       >

@@ -48,7 +48,6 @@ class App extends Component {
     });
   }
   render() {
-    console.log(this.state);
     return (
       <Wrapper>
         <NameWrapper ref={div => (this.NameWrapper = div)}>
@@ -85,6 +84,7 @@ class App extends Component {
             currentTopOrBottom={"bottom"}
           />
         </NameWrapper>
+
         <ButtonWrapper>
           <EnterButton
             buttonText="Who am I?"
