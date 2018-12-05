@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { TweenLite, Linear } from "gsap";
-
 import getNewCoordinates from "./getNewCoordinates";
 
 const StyledLetter = styled.div`
@@ -13,7 +12,7 @@ const StyledLetter = styled.div`
   font-size: 22px;
 `;
 
-const Trigger = styled.div``;
+const LetterWrapper = styled.div``;
 
 class Letter extends Component {
   constructor(props) {
@@ -41,21 +40,15 @@ class Letter extends Component {
     const { animationType, currentSide, currentTopOrBottom } = this.props;
 
     const windowWidth = window.innerWidth;
-    this.setState(
-      {
-        minTop: -this.letterElement.offsetTop - 20,
-        maxTop: this.letterElement.offsetHeight - 102,
-        maxRight:
-          windowWidth - this.letterElement.getBoundingClientRect().x - 95,
-        minLeft: -this.letterElement.offsetLeft - 25,
-        animationType,
-        currentSide: currentSide,
-        currentTopOrBottom
-      },
-      () => {
-        this.moveElement(animationType);
-      }
-    );
+    this.setState({
+      minTop: -this.letterElement.offsetTop - 20,
+      maxTop: this.letterElement.offsetHeight - 102,
+      maxRight: windowWidth - this.letterElement.getBoundingClientRect().x - 95,
+      minLeft: -this.letterElement.offsetLeft - 25,
+      animationType,
+      currentSide: currentSide,
+      currentTopOrBottom
+    });
   }
 
   moveElement = animationType => {
@@ -67,6 +60,7 @@ class Letter extends Component {
       currentSide,
       currentTopOrBottom
     } = this.state;
+    const animationTime = Math.floor(Math.random() * 3) + 1;
     if (animationType === "x") {
       const newCoordinates = getNewCoordinates(
         minTop,
@@ -76,19 +70,14 @@ class Letter extends Component {
         currentSide
       );
       const { x, y, xDirection } = newCoordinates;
-      const animationTime = Math.floor(Math.random() * 3) + 1;
-      this.setState(
-        {
-          x,
-          y,
-          animationTime,
-          currentSide: xDirection,
-          animationType
-        },
-        () => {
-          this.moveAnimation();
-        }
-      );
+
+      this.setState({
+        x,
+        y,
+        animationTime,
+        currentSide: xDirection,
+        animationType
+      });
     } else if (animationType === "y") {
       const newCoordinates = getNewCoordinates(
         minTop,
@@ -98,32 +87,21 @@ class Letter extends Component {
         currentTopOrBottom
       );
       const { x, y, yDirection } = newCoordinates;
-      const animationTime = Math.floor(Math.random() * 4) + 1;
 
-      this.setState(
-        {
-          x,
-          y,
-          animationTime,
-          currentTopOrBottom: yDirection,
-          animationType: "y"
-        },
-        () => {
-          this.moveAnimation();
-        }
-      );
+      this.setState({
+        x,
+        y,
+        animationTime,
+        currentTopOrBottom: yDirection,
+        animationType: "y"
+      });
     }
   };
 
   flipAnimation = () => {
     // alternate animation types
-    const { animationType, endAnimation } = this.state;
-    if (endAnimation) {
-      this.setState({
-        endAnimation: true
-      });
-      return;
-    }
+    const { animationType } = this.state;
+
     if (animationType === "x") {
       this.moveElement("y");
     } else if (animationType === "y") {
@@ -143,7 +121,7 @@ class Letter extends Component {
     );
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     if (this.props.isHome) {
       this.returnToHome();
     }
@@ -152,23 +130,20 @@ class Letter extends Component {
       this.setState({
         endAnimation: false
       });
-      this.moveAnimation(this.state.animationType);
+      this.flipAnimation();
     }
+    // fires whenever component updates
+    this.moveAnimation();
   }
 
   returnToHome = () => {
     if (this.state.x !== 0) {
-      this.setState(
-        {
-          x: 0,
-          y: 0,
-          animationTime: 0.5,
-          endAnimation: true
-        },
-        () => {
-          this.moveAnimation();
-        }
-      );
+      this.setState({
+        x: 0,
+        y: 0,
+        animationTime: 0.5,
+        endAnimation: true
+      });
     }
   };
 
@@ -176,15 +151,13 @@ class Letter extends Component {
     const { data, borderColor, isHome, margin } = this.props;
 
     return (
-      <Trigger
+      <LetterWrapper
         isHome={isHome}
         margin={margin}
         ref={div => (this.letterElement = div)}
       >
-        <StyledLetter isHome={isHome} borderColor={borderColor}>
-          {data}
-        </StyledLetter>
-      </Trigger>
+        <StyledLetter borderColor={borderColor}>{data}</StyledLetter>
+      </LetterWrapper>
     );
   }
 }
