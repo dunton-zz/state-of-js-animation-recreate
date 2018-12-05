@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { TweenLite, Linear } from "gsap";
-import leftToRightAnimation from "./leftToRightAnimation";
-import topToBottomAnimation from "./topToBottomAnimation";
+
+import getNewCoordinates from "./getNewCoordinates";
 
 const StyledLetter = styled.div`
   padding: 32px;
@@ -22,10 +22,10 @@ class Letter extends Component {
       x: 0,
       y: 0,
       animationTime: 2,
-      minTop: null,
-      maxTop: null,
-      maxRight: null,
-      minLeft: null,
+      minTop: 0,
+      maxTop: 0,
+      maxRight: 0,
+      minLeft: 0,
       currentSide: null,
       currentTopOrBottom: null,
       animationType: "",
@@ -68,7 +68,7 @@ class Letter extends Component {
       currentTopOrBottom
     } = this.state;
     if (animationType === "x") {
-      const newCoordinates = leftToRightAnimation(
+      const newCoordinates = getNewCoordinates(
         minTop,
         maxTop,
         minLeft,
@@ -90,7 +90,7 @@ class Letter extends Component {
         }
       );
     } else if (animationType === "y") {
-      const newCoordinates = topToBottomAnimation(
+      const newCoordinates = getNewCoordinates(
         minTop,
         maxTop,
         minLeft,
