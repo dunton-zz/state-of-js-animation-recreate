@@ -7,9 +7,10 @@ const StyledLetter = styled.div`
   padding: 32px;
   background-color: black;
   color: white;
-  margin: 20px;
+  margin: ${props => props.margin}px;
   border: 1px solid ${props => props.borderColor};
   font-size: 22px;
+  font-weight: bold;
 `;
 
 const LetterWrapper = styled.div``;
@@ -25,7 +26,7 @@ class Letter extends Component {
       maxTop: 0,
       maxRight: 0,
       minLeft: 0,
-      currentSide: null,
+      currentLeftOrRight: null,
       currentTopOrBottom: null,
       animationType: "",
       endAnimation: false
@@ -37,16 +38,26 @@ class Letter extends Component {
   }
 
   componentDidMount() {
-    const { animationType, currentSide, currentTopOrBottom } = this.props;
+    const {
+      animationType,
+      currentLeftOrRight,
+      currentTopOrBottom,
+      margin
+    } = this.props;
 
     const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const { offsetTop, offsetLeft } = this.letterElement;
+    const elementHeight = this.letterElement.getBoundingClientRect().height;
+    const elementX = this.letterElement.getBoundingClientRect().x;
+    const elementWidth = this.letterElement.getBoundingClientRect().width;
     this.setState({
-      minTop: -this.letterElement.offsetTop - 20,
-      maxTop: this.letterElement.offsetHeight - 102,
-      maxRight: windowWidth - this.letterElement.getBoundingClientRect().x - 95,
-      minLeft: -this.letterElement.offsetLeft - 25,
+      minTop: -offsetTop - margin,
+      maxTop: windowHeight - elementHeight + margin - offsetTop,
+      maxRight: windowWidth - elementX - (elementWidth - margin),
+      minLeft: -offsetLeft - margin,
       animationType,
-      currentSide: currentSide,
+      currentLeftOrRight,
       currentTopOrBottom
     });
   }
@@ -57,7 +68,7 @@ class Letter extends Component {
       maxTop,
       minLeft,
       maxRight,
-      currentSide,
+      currentLeftOrRight,
       currentTopOrBottom
     } = this.state;
     const animationTime = Math.floor(Math.random() * 3) + 1;
@@ -67,7 +78,7 @@ class Letter extends Component {
         maxTop,
         minLeft,
         maxRight,
-        currentSide
+        currentLeftOrRight
       );
       const { x, y, xDirection } = newCoordinates;
 
@@ -75,7 +86,7 @@ class Letter extends Component {
         x,
         y,
         animationTime,
-        currentSide: xDirection,
+        currentLeftOrRight: xDirection,
         animationType
       });
     } else if (animationType === "y") {
@@ -151,12 +162,10 @@ class Letter extends Component {
     const { data, borderColor, isHome, margin } = this.props;
 
     return (
-      <LetterWrapper
-        isHome={isHome}
-        margin={margin}
-        ref={div => (this.letterElement = div)}
-      >
-        <StyledLetter borderColor={borderColor}>{data}</StyledLetter>
+      <LetterWrapper isHome={isHome} ref={div => (this.letterElement = div)}>
+        <StyledLetter borderColor={borderColor} margin={margin}>
+          {data}
+        </StyledLetter>
       </LetterWrapper>
     );
   }

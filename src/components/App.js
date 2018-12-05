@@ -6,7 +6,8 @@ import styled from "styled-components";
 const NameWrapper = styled.div`
   display: flex;
   justify-content: center;
-  height: 100%;
+
+  flex-wrap: wrap;
 `;
 
 const ButtonWrapper = styled.div`
@@ -25,7 +26,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      home: false
+      home: false,
+      margin: 20
     };
 
     this.NameWrapper = null;
@@ -56,35 +58,95 @@ class App extends Component {
             borderColor="red"
             isHome={this.state.home}
             animationType={"y"}
-            currentSide={"left"}
+            currentLeftOrRight={"left"}
             currentTopOrBottom={"top"}
+            margin={this.state.margin}
           />
           <Letter
             data="Y"
             borderColor="red"
             isHome={this.state.home}
             animationType={"x"}
-            currentSide={"right"}
+            currentLeftOrRight={"right"}
             currentTopOrBottom={"top"}
+            margin={this.state.margin}
           />
+
           <Letter
             data="A"
             borderColor="red"
             isHome={this.state.home}
             animationType={"x"}
-            currentSide={"left"}
+            currentLeftOrRight={"left"}
             currentTopOrBottom={"top"}
+            margin={this.state.margin}
           />
           <Letter
             data="N"
             borderColor="red"
             isHome={this.state.home}
             animationType={"y"}
-            currentSide={"right"}
+            currentLeftOrRight={"right"}
             currentTopOrBottom={"bottom"}
+            margin={this.state.margin}
           />
         </NameWrapper>
-
+        <NameWrapper>
+          <Letter
+            data="D"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"x"}
+            currentLeftOrRight={"right"}
+            currentTopOrBottom={"bottom"}
+            margin={this.state.margin}
+          />
+          <Letter
+            data="U"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"y"}
+            currentLeftOrRight={"left"}
+            currentTopOrBottom={"bottom"}
+            margin={this.state.margin}
+          />
+          <Letter
+            data="N"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"y"}
+            currentLeftOrRight={"right"}
+            currentTopOrBottom={"top"}
+            margin={this.state.margin}
+          />
+          <Letter
+            data="T"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"y"}
+            currentLeftOrRight={"left"}
+            currentTopOrBottom={"top"}
+            margin={this.state.margin}
+          />
+          <Letter
+            data="O"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"y"}
+            currentLeftOrRight={"right"}
+            currentTopOrBottom={"bottom"}
+            margin={this.state.margin}
+          />
+          <Letter
+            data="N"
+            borderColor="red"
+            isHome={this.state.home}
+            animationType={"y"}
+            currentLeftOrRight={"left"}
+            currentTopOrBottom={"bottom"}
+            margin={this.state.margin}
+          />
+        </NameWrapper>
         <ButtonWrapper>
           <EnterButton
             buttonText="Who am I?"
