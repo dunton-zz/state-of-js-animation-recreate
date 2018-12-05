@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { TweenLite, Linear } from "gsap";
 import getNewCoordinates from "./getNewCoordinates";
+import sizeAnimationContainer from "./sizeAnimationContainer";
 
 const StyledLetter = styled.div`
   padding: 32px;
@@ -45,12 +46,15 @@ class Letter extends Component {
       margin
     } = this.props;
 
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const { offsetTop, offsetLeft } = this.letterElement;
-    const elementHeight = this.letterElement.getBoundingClientRect().height;
-    const elementX = this.letterElement.getBoundingClientRect().x;
-    const elementWidth = this.letterElement.getBoundingClientRect().width;
+    const {
+      windowWidth,
+      windowHeight,
+      offsetTop,
+      offsetLeft,
+      elementHeight,
+      elementX,
+      elementWidth
+    } = sizeAnimationContainer(this.letterElement);
     this.setState({
       minTop: -offsetTop - margin,
       maxTop: windowHeight - elementHeight + margin - offsetTop,

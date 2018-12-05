@@ -27,7 +27,8 @@ class App extends Component {
     super(props);
     this.state = {
       home: false,
-      margin: 20
+      margin: 20,
+      update: false
     };
 
     this.NameWrapper = null;
@@ -43,12 +44,7 @@ class App extends Component {
       home: false
     });
   };
-  componentDidMount() {
-    const width = this.NameWrapper.getBoundingClientRect().width;
-    this.setState({
-      containerWidth: width
-    });
-  }
+
   render() {
     return (
       <Wrapper>
