@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { TweenLite, Linear } from "gsap";
-import getNewCoordinates from "./getNewCoordinates";
-import sizeAnimationContainer from "./sizeAnimationContainer";
+import getNewCoordinates from "../functions/getNewCoordinates";
+import sizeAnimationContainer from "../functions/sizeAnimationContainer";
 
 const StyledLetter = styled.div`
   padding: 32px;
@@ -153,6 +153,7 @@ class Letter extends Component {
   }
 
   returnToHome = () => {
+    console.log("called");
     if (this.state.x !== 0) {
       this.setState({
         x: 0,

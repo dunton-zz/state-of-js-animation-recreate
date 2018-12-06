@@ -1,21 +1,8 @@
 import React, { Component } from "react";
-import Letter from "./Letter";
-import EnterButton from "./EnterButton";
+import MediaQuery from "react-responsive";
 import styled from "styled-components";
-
-const NameWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-
-  flex-wrap: wrap;
-`;
-
-const ButtonWrapper = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-`;
+import Desktop from "./Desktop";
+import Mobile from "./Mobile";
 
 const Wrapper = styled.section`
   height: 100vh;
@@ -45,108 +32,17 @@ class App extends Component {
   render() {
     return (
       <Wrapper>
-        <NameWrapper>
-          <Letter
-            data="R"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"left"}
-            currentTopOrBottom={"top"}
+        <MediaQuery maxDeviceWidth={782}>
+          <Mobile />
+        </MediaQuery>
+        <MediaQuery minDeviceWidth={783}>
+          <Desktop
             margin={this.state.margin}
-          />
-          <Letter
-            data="Y"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-            currentLeftOrRight={"right"}
-            currentTopOrBottom={"top"}
-            margin={this.state.margin}
-          />
-
-          <Letter
-            data="A"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-            currentLeftOrRight={"left"}
-            currentTopOrBottom={"top"}
-            margin={this.state.margin}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"right"}
-            currentTopOrBottom={"bottom"}
-            margin={this.state.margin}
-          />
-        </NameWrapper>
-        <NameWrapper>
-          <Letter
-            data="D"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"x"}
-            currentLeftOrRight={"right"}
-            currentTopOrBottom={"bottom"}
-            margin={this.state.margin}
-          />
-          <Letter
-            data="U"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"left"}
-            currentTopOrBottom={"bottom"}
-            margin={this.state.margin}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"right"}
-            currentTopOrBottom={"top"}
-            margin={this.state.margin}
-          />
-          <Letter
-            data="T"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"left"}
-            currentTopOrBottom={"top"}
-            margin={this.state.margin}
-          />
-          <Letter
-            data="O"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"right"}
-            currentTopOrBottom={"bottom"}
-            margin={this.state.margin}
-          />
-          <Letter
-            data="N"
-            borderColor="red"
-            isHome={this.state.home}
-            animationType={"y"}
-            currentLeftOrRight={"left"}
-            currentTopOrBottom={"bottom"}
-            margin={this.state.margin}
-          />
-        </NameWrapper>
-        <ButtonWrapper>
-          <EnterButton
-            buttonText="Who am I?"
+            home={this.state.home}
             checkForHover={this.checkForHover}
             removeHover={this.removeHover}
           />
-        </ButtonWrapper>
+        </MediaQuery>
       </Wrapper>
     );
   }
